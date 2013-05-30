@@ -50,6 +50,12 @@ define( [ 'baseClass' ], function( BaseClass ) {
 		// this will be used to check if the caller function is the consructor
 		rVal.$$isConstructor = true;
 
+
+		// now we'll check interfaces
+		for( var i = 1; i < arguments.length; i++ ) {
+			arguments[ i ].compare( rVal );
+		}
+
 		return rVal;
 	};	
 

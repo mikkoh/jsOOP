@@ -6,7 +6,7 @@ require.config( {
 	}
 });
 
-requirejs( [ 'Class' ], function( Class ) {
+requirejs( [ 'Class', 'Interface' ], function( Class, Interface ) {
 	
 	var BaseBaseBaseClass = new Class( {
 		inheritedProp: 0,
@@ -74,6 +74,16 @@ requirejs( [ 'Class' ], function( Class ) {
 		}
 	});
 
+
+
+	var IClassToTest = new Interface( {
+		functionChain: function( testProp1 ) {},
+		inheritedProp: 0
+	});
+
+
+
+
 	var ClassToTest = new Class( {
 		Extends: BaseClass,
 
@@ -100,7 +110,7 @@ requirejs( [ 'Class' ], function( Class ) {
 
 			return this.parent( startVal );
 		}
-	});
+	}, IClassToTest);
 
 
 
