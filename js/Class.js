@@ -5,7 +5,7 @@ define( [ 'baseClass' ], function( BaseClass ) {
 			var rVal = descriptor.initialize;
 			delete descriptor.initialize;
 		} else {
-			rVal = function() { };
+			rVal = function() { this.parent.apply( this, arguments ); };
 		}
 
 		if( descriptor.Extends ) {
