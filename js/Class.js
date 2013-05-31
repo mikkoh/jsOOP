@@ -22,13 +22,12 @@ define( [ 'baseClass' ], function( BaseClass ) {
 		rVal.prototype.$$setters = {};
 
 		for( var i in descriptor ) {
-
 			if( typeof descriptor[ i ] == 'function' ) {
 				descriptor[ i ].$$name = i;
 				descriptor[ i ].$$owner = rVal.prototype;
 
 				rVal.prototype[ i ] = descriptor[ i ];
-			} else if( typeof descriptor[ i ] == 'object' && ( descriptor[ i ].get || descriptor[ i ].set ) ) {
+			} else if( descriptor[ i ] && typeof descriptor[ i ] == 'object' && ( descriptor[ i ].get || descriptor[ i ].set ) ) {
 				Object.defineProperty( rVal.prototype, i , descriptor[ i ] );
 
 				if( descriptor[ i ].get ) {
