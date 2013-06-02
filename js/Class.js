@@ -15,7 +15,7 @@ define( [ 'baseClass' ], function( BaseClass ) {
 			delete descriptor.Extends;
 		} else {
 			rVal.$$parentConstructor = function() {}
-			rVal.prototype = BaseClass;
+			rVal.prototype = Object.create( BaseClass );
 		}
 
 		rVal.prototype.$$getters = {};
