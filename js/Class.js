@@ -5,7 +5,7 @@ define( [ 'baseClass' ], function( BaseClass ) {
 			var rVal = descriptor.initialize;
 			delete descriptor.initialize;
 		} else {
-			rVal = function() { };
+			rVal = function() { this.parent.apply( this, arguments ); };
 		}
 
 		if( descriptor.Extends ) {
@@ -15,20 +15,19 @@ define( [ 'baseClass' ], function( BaseClass ) {
 			delete descriptor.Extends;
 		} else {
 			rVal.$$parentConstructor = function() {}
-			rVal.prototype = BaseClass;
+			rVal.prototype = Object.create( BaseClass );
 		}
 
 		rVal.prototype.$$getters = {};
 		rVal.prototype.$$setters = {};
 
 		for( var i in descriptor ) {
-
 			if( typeof descriptor[ i ] == 'function' ) {
 				descriptor[ i ].$$name = i;
 				descriptor[ i ].$$owner = rVal.prototype;
 
 				rVal.prototype[ i ] = descriptor[ i ];
-			} else if( typeof descriptor[ i ] == 'object' && ( descriptor[ i ].get || descriptor[ i ].set ) ) {
+			} else if( descriptor[ i ] && typeof descriptor[ i ] == 'object' && ( descriptor[ i ].get || descriptor[ i ].set ) ) {
 				Object.defineProperty( rVal.prototype, i , descriptor[ i ] );
 
 				if( descriptor[ i ].get ) {
