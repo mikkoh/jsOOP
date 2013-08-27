@@ -1,4 +1,4 @@
-define( [ 'baseClass' ], function( BaseClass ) {
+define( [ 'jsOOP/baseClass' ], function( BaseClass ) {
 
 	var Class = function( descriptor ) {
 		if( descriptor.initialize ) {
