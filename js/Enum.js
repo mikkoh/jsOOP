@@ -47,7 +47,7 @@ define( [ 'Class' ], function( Class ) {
 	console.log(Days.fromValue("Thursday").ordinal); // => 3
 	*/
 
-	//Used internally for a nice toString representation of the Enum object
+	//The resulting Enum class
 	var EnumResult = new Class({
 		values: null,
 
@@ -88,13 +88,13 @@ define( [ 'Class' ], function( Class ) {
 				obj = new base(e);
 				ret[e] = obj;
 			} else {
-				var isArr = false;
-				if (typeof Array.isArray === "function")
-					isArr = Array.isArray(e);
-				else
-					isArr = Object.prototype.toString.call( e ) === '[object Array]';
+				// var isArr = false;
+				// if (typeof Array.isArray === "function")
+				// 	isArr = Array.isArray(e);
+				// else
+				// 	isArr = Object.prototype.toString.call( e ) === '[object Array]';
 
-				if (!isArr)
+				if (!Array.isArray(e))
 					throw "enum values must be String or an array of arguments";
 
 				key = e[0];
@@ -103,9 +103,8 @@ define( [ 'Class' ], function( Class ) {
 				e.unshift(null);
 				obj = new (Function.prototype.bind.apply(base, e));
 
-				// maybe allow users to use different subclass?
-				// if ( !(obj instanceof Enum.Base) )
-				// 	throw "enum base class must be a subclass of Enum.Base";
+				if ( !(obj instanceof Enum.Base) )
+					throw "enum base class must be a subclass of Enum.Base";
 
 				ret[key] = obj;
 			}
@@ -130,10 +129,11 @@ define( [ 'Class' ], function( Class ) {
 		},
 
 		toString: function() {
-			if (this.value)
-				return this.value;
-			else
-				return this.parent();
+			return this.value || this.parent();
+		},
+
+		valueOf: function() {
+			return this.value || this.parent();
 		}
 	});
 
