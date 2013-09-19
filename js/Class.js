@@ -1,6 +1,9 @@
 define( [ 'jsOOP/baseClass' ], function( BaseClass ) {
 
 	var Class = function( descriptor ) {
+		if (!descriptor) 
+			descriptor = {};
+		
 		if( descriptor.initialize ) {
 			var rVal = descriptor.initialize;
 			delete descriptor.initialize;
