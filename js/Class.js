@@ -1,24 +1,41 @@
 define( [ 'jsOOP/baseClass' ], function( BaseClass ) {
 
 	var Class = function( descriptor ) {
-		if (!descriptor) 
+
+		var rVal = undefined;
+
+		if ( descriptor === undefined ) {
+
 			descriptor = {};
-		
-		if( descriptor.initialize ) {
-			var rVal = descriptor.initialize;
-			delete descriptor.initialize;
-		} else {
-			rVal = function() { this.parent.apply( this, arguments ); };
 		}
 
-		if( descriptor.Extends ) {
+
+		if( descriptor.initialize ) {
+
+			rVal = descriptor.initialize;
+			delete descriptor.initialize;
+		} else {
+
+			rVal = function() { 
+
+				Array.prototype.splice.apply( arguments, [ 0, 0, this ] );
+
+				Class.parent.apply( undefined, arguments );
+			};
+		}
+
+		if( descriptor.Extends !== undefined ) {
+
+			descriptor.Extends.$$isConstructor = true;
+
 			rVal.prototype = Object.create( descriptor.Extends.prototype );
 			// this will be used to call the parent constructor
 			rVal.$$parentConstructor = descriptor.Extends;
 			delete descriptor.Extends;
 		} else {
-			rVal.$$parentConstructor = function() {}
+
 			rVal.prototype = Object.create( BaseClass );
+			rVal.$$parentConstructor = function() {};
 		}
 
 		rVal.prototype.$$getters = {};
@@ -52,7 +69,6 @@ define( [ 'jsOOP/baseClass' ], function( BaseClass ) {
 		// this will be used to check if the caller function is the consructor
 		rVal.$$isConstructor = true;
 
-
 		// now we'll check interfaces
 		for( var i = 1; i < arguments.length; i++ ) {
 			arguments[ i ].compare( rVal );
@@ -60,6 +76,50 @@ define( [ 'jsOOP/baseClass' ], function( BaseClass ) {
 
 		return rVal;
 	};	
+
+	Class.parent = function( scope ) {
+
+		var caller = Class.parent.caller;
+
+		arguments = Array.prototype.slice.apply( arguments, [ 1 ] )
+
+		// if the current function calling is the constructor
+		if( caller.$$isConstructor ) {
+			var parentFunction = caller.$$parentConstructor;
+		} else {
+			if( caller.$$name ) {
+				var callerName = caller.$$name;
+				var isGetter = caller.$$owner.$$getters[ callerName ];
+				var isSetter = caller.$$owner.$$setters[ callerName ];
+
+				if( arguments.length == 1 && isSetter ) {
+					var parentFunction = Object.getPrototypeOf( caller.$$owner ).$$setters[ callerName ];
+
+					if( parentFunction === undefined ) {
+						throw 'No setter defined in parent';
+					}
+				} else if( arguments.length == 0 && isGetter ) {
+					var parentFunction = Object.getPrototypeOf( caller.$$owner ).$$getters[ callerName ];
+
+					if( parentFunction === undefined ) {
+						throw 'No getter defined in parent';
+					}
+				} else if( isSetter || isGetter ) {
+					throw 'Incorrect amount of arguments sent to getter or setter';
+				} else {
+					var parentFunction = Object.getPrototypeOf( caller.$$owner )[ callerName ];	
+
+    				if( parentFunction === undefined ) {
+						throw 'No parent function defined for ' + callerName;
+					}
+				}
+			} else {
+				throw 'You cannot call parent here';
+			}
+		}
+
+		return parentFunction.apply( scope, arguments );
+	};
 
 	return Class;
 });
