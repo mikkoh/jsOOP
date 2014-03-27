@@ -1,0 +1,31 @@
+{
+  "name": "jsOOP",
+  "version": "1.0.0",
+  "description": "jsOOP aids in object oriented programming in JS.",
+  "main": "js/Class.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/MikkoH/jsOOP.git"
+  },
+  "keywords": [
+    "oop",
+    "object",
+    "oriented",
+    "enum"
+  ],
+  "author": "Mikko Haapoja",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MikkoH/jsOOP/issues"
+  },
+  "homepage": "https://github.com/MikkoH/jsOOP",
+  "devDependencies": {
+    "grunt": "~0.4.4"
+  }
+}
