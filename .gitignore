@@ -2,3 +2,4 @@ jsOOP.sublime-project
 jsOOP.sublime-workspace
 node_modules/
 app/
+test/doTestsUMD.js

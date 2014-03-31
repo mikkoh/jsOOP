@@ -27,6 +27,7 @@
   "homepage": "https://github.com/MikkoH/jsOOP",
   "devDependencies": {
     "grunt": "~0.4.4",
-    "browserify": "~3.33.1"
+    "browserify": "~3.33.1",
+    "grunt-contrib-qunit": "~0.4.0"
   }
 }

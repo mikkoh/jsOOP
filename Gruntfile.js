@@ -4,8 +4,16 @@ var fs = require( 'fs' );
 /*global module:false*/
 module.exports = function(grunt) {
 
-	// Project configuration.
-	grunt.registerTask( 'browserify', 'This will Browserify everything', function() {
+	grunt.initConfig({
+
+		qunit: {
+
+			all: [ './test/**/*.html' ]
+		}
+	});
+
+	//This task will Browserify the SRC for jsOOP
+	grunt.registerTask( 'browserify', 'This will Browserify jsOOP Lib', function() {
 
 		var done = this.async();
 		var numDone = 0;
@@ -31,6 +39,17 @@ module.exports = function(grunt) {
 		.pipe( fs.createWriteStream( './dist/Enum.js' ) );
 	});
 
-	// Default task.
+	grunt.registerTask( 'browserifyTests', 'This will Browserify doTests', function() {
+
+		var done = this.async();
+
+		browserify( [ './test/doTests.js' ] )
+		.bundle( { standalone: 'doTests' }, done )
+		.pipe( fs.createWriteStream( './test/doTestsUMD.js' ) );
+	});
+
+	grunt.loadNpmTasks('grunt-contrib-qunit');
+
+	grunt.registerTask( 'test', [ 'browserify', 'browserifyTests', 'qunit' ] );
 	grunt.registerTask( 'default', [ 'browserify' ] );
 };
