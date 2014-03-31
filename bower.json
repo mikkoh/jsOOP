@@ -1,4 +1,35 @@
 {
   "name": "jsOOP",
-  "version": "0.0.1"
+  "version": "0.0.1",
+  "homepage": "https://github.com/MikkoH/jsOOP",
+  "authors": [
+    "Mikko Haapoja <me@mikkoh.com>"
+  ],
+  "description": "jsOOP is a library which helps with Object Oriented Programming in JS.",
+  "main": "dist/jsOOP.js",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "oop",
+    "object",
+    "oriented",
+    "class",
+    "enum"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "qunit": "~1.14.0",
+    "requirejs": "~2.1.11"
+  }
 }

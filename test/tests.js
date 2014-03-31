@@ -1,13 +1,16 @@
 require.config( {
-	baseUrl: 'js',
+	baseUrl: './',
 
 	paths: {
 
+		jsOOP: '../dist/'
 	}
 });
 
-requirejs( [ 'Class', 'Interface' ], function( Class, Interface ) {
+requirejs( [ 'jsOOP/Class', 'jsOOP/Interface' ], function( Class, Interface ) {
 	
+	console.log( Class, Interface );
+
 	var BaseBaseBaseClass = new Class( {
 		inheritedProp: 0,
 

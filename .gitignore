@@ -1,3 +1,4 @@
 jsOOP.sublime-project
 jsOOP.sublime-workspace
-node_modules
+node_modules/
+app/
