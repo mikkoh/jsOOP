@@ -7,10 +7,8 @@ require.config( {
 	}
 });
 
-requirejs( [ 'jsOOP/Class', 'jsOOP/Interface' ], function( Class, Interface ) {
+requirejs( [ 'jsOOP/Class', 'jsOOP/Interface', 'jsOOP/Enum' ], function( Class, Interface, Enum ) {
 	
-	console.log( Class, Interface );
-
 	var BaseBaseBaseClass = new Class( {
 		inheritedProp: 0,
 

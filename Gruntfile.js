@@ -8,14 +8,27 @@ module.exports = function(grunt) {
 	grunt.registerTask( 'browserify', 'This will Browserify everything', function() {
 
 		var done = this.async();
+		var numDone = 0;
+		var checkDone = function() {
 
+			if( ++numDone == 3 ) 
+				done();
+		};
+
+		//export a standalone version of Class
 		browserify( [ './js/Class.js' ] )
-		.bundle( { standalone: 'Class' }, done )
+		.bundle( { standalone: 'Class' }, checkDone )
 		.pipe( fs.createWriteStream( './dist/Class.js' ) );
 
-		// browserify( [ './js/Interface.js' ] )
-		// .bundle( { standalone: 'Interface' }, done )
-		// .pipe( fs.createWriteStream( './dist/Interface.js' ) );
+		//export a standalone version of Interface
+		browserify( [ './js/Interface.js' ] )
+		.bundle( { standalone: 'Interface' }, checkDone )
+		.pipe( fs.createWriteStream( './dist/Interface.js' ) );
+
+		//export a standalone version of Enum
+		browserify( [ './js/Enum.js' ] )
+		.bundle( { standalone: 'Enum' }, checkDone )
+		.pipe( fs.createWriteStream( './dist/Enum.js' ) );
 	});
 
 	// Default task.
