@@ -4,6 +4,11 @@ jsOOP
 This library is a way to "sugar" some object oriented functionality in Javascript. It's syntactically based on MooTools 
 Class.
 
+Consuming jsOOP
+---------------
+jsOOP builds are made using [Browserify](http://browserify.org/) using Standalone builds. This means you can use the files contained in the ```dist```
+folder either by using script tags in HTML, using RequireJS and AMD Modules, or in NodeJS using CommonJS.
+
 So to define a class with a function called foo you'd do the following:
 ```javascript
 var NewClass = new Class({
